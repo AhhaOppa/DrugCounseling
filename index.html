@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Form with LIFF</title>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+</head>
+<body>
+    <h1>กรุณารอสักครู่...</h1>
+    <script>
+        function initializeLiff() {
+            liff.init({ liffId: "2006423065-PpO36v2z" }) // Replace with your LIFF ID
+                .then(() => {
+                    if (liff.isLoggedIn()) {
+                        liff.getProfile().then(profile => {
+                            const userId = profile.userId;
+                            const displayName = profile.displayName;
+
+                            // สร้าง URL ของ Google Form พร้อมส่งค่า UserID และ DisplayName
+                            const googleFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdECsgrC-88xCZM3o3olJo5_ciOrfzKulGHfuOP1GYFAan3mQ/viewform";
+                            const formUrlWithParams = `${googleFormUrl}?usp=pp_url&entry.1309222655=${userId}&entry.1498928995=${displayName}`;
+
+                            // เปลี่ยนเส้นทางไปที่ Google Form พร้อม URL parameters
+                            window.location.href = formUrlWithParams;
+                        });
+                    } else {
+                        liff.login();
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+        initializeLiff();
+    </script>
+</body>
+</html>
